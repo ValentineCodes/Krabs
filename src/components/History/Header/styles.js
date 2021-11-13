@@ -1,6 +1,8 @@
-import {StyleSheet} from 'react-native';
+import {StyleSheet, Dimensions} from 'react-native';
 
 import {COLORS} from '../../../constants/colors';
+
+const SCREENWIDTH = Dimensions.get('screen').width;
 
 export const styles = StyleSheet.create({
   container: {
@@ -9,7 +11,7 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
   },
   title: {
-    fontSize: 23,
+    fontSize: SCREENWIDTH * 0.05,
     fontWeight: 'bold',
     color: COLORS.header,
   },
@@ -22,7 +24,7 @@ export const styles = StyleSheet.create({
   dropdownStyle: {backgroundColor: COLORS.primary, borderRadius: 10},
   dropdownRowTextStyle: {color: 'white', fontSize: 15},
   dropdownRowStyle: {borderBottomColor: COLORS.faintWhite},
-  addBtn: {
+  btn: {
     marginLeft: 15,
     paddingHorizontal: 5,
     paddingVertical: 3,

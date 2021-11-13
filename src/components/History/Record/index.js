@@ -51,12 +51,18 @@ const Record = ({
   const renderRecord = useMemo(
     () => (
       <View key={id} style={styles.dataContainer}>
-        <Text style={styles.time}>{time}</Text>
+        <Text allowFontScaling={false} style={styles.time}>
+          {time}
+        </Text>
 
         <View style={styles.data}>
-          <Text style={styles.description}>{description}</Text>
-          <Text style={styles.category}>{category}</Text>
-          <Text style={styles.amount}>
+          <Text allowFontScaling={false} style={styles.description}>
+            {description}
+          </Text>
+          <Text allowFontScaling={false} style={styles.category}>
+            {category}
+          </Text>
+          <Text allowFontScaling={false} style={styles.amount}>
             {'\u20A6'}
             {amount}
           </Text>
@@ -90,7 +96,7 @@ const Record = ({
 
 // Main Component
 export default function ({date, expenses, onPressEdit}) {
-  const renderRecord = record => (
+  const renderRecord = (record) => (
     <Record
       key={record.id}
       id={record.id}
@@ -112,7 +118,9 @@ export default function ({date, expenses, onPressEdit}) {
 
       {/* Expenses */}
       {expenses.length == 0 ? (
-        <Text style={styles.msg}>No record for this category</Text>
+        <Text allowFontScaling={false} style={styles.msg}>
+          No record for this category
+        </Text>
       ) : (
         // renderRecord()
         expenses.map(renderRecord)

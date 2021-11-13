@@ -321,10 +321,17 @@ export default function () {
           )}
         </View>
 
-        <Text style={styles.amount}>
-          {'\u20A6'}
-          {getTotalAmount()}
-        </Text>
+        <View style={styles.amountContainer}>
+          <Text allowFontScaling={false} style={styles.amount}>
+            {'\u20A6'}
+            {getTotalAmount()}
+          </Text>
+          <Text allowFontScaling={false} style={[styles.amount, styles.avgAmt]}>
+            a.v.g {'\u21D2'} {'\u20A6'}
+            {(getTotalAmount() / labelLength.current).toFixed(2)}{' '}
+            {labelLength.current === 12 ? 'PM' : 'PD'}
+          </Text>
+        </View>
       </View>
 
       {/* Chart */}

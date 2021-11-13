@@ -11,11 +11,11 @@ import {
 import {LinearProgress, Icon} from 'react-native-elements';
 import {useDispatch, useSelector} from 'react-redux';
 import {useToast} from 'react-native-toast-notifications';
-// import Animated, {
-//   useSharedValue,
-//   useAnimatedStyle,
-//   withTiming,
-// } from 'react-native-reanimated';
+import Animated, {
+  useSharedValue,
+  useAnimatedStyle,
+  withTiming,
+} from 'react-native-reanimated';
 
 import logo from '../../../assets/images/mr_krabs.png';
 import {getTimestamp} from '../../constants/helperFns';
@@ -23,7 +23,7 @@ import {styles} from './styles';
 
 const SCREENWIDTH = Dimensions.get('screen').width;
 
-export default function Header() {
+export default function Header({popup}) {
   const toast = useToast();
   const dispatch = useDispatch();
   const records = useSelector((state) => state.records[getTimestamp().date]);
@@ -32,39 +32,32 @@ export default function Header() {
 
   const [amount, setAmount] = useState('');
   const [amountSpent, setAmountSpent] = useState(0);
-  const [isFormVisible, setIsFormVisible] = useState(false);
-  const [formDisplay, setFormDisplay] = useState('none');
 
   const displayMsg = (msg) => {
-    toast.show(msg);
+    toast.show(msg, {
+      type: 'success',
+      duration: 2000,
+    });
   };
 
-  // const formPos = useSharedValue(SCREENWIDTH / 2);
+  const formPos = useSharedValue(SCREENWIDTH);
 
-  // const animatedStyle = useAnimatedStyle(() => {
-  //   return {
-  //     transform: [{translateX: formPos.value}],
-  //   };
-  // });
-
-  // const showForm = () => {
-  //   formPos.value = withTiming(0, {
-  //     duration: 500,
-  //   });
-  // };
-
-  // const hideForm = () => {
-  //   formPos.value = withTiming(SCREENWIDTH / 2, {
-  //     duration: 500,
-  //   });
-  // };
+  const animatedStyle = useAnimatedStyle(() => {
+    return {
+      transform: [{translateX: formPos.value}],
+    };
+  });
 
   const showForm = () => {
-    setIsFormVisible(true);
+    formPos.value = withTiming(SCREENWIDTH * 0.55, {
+      duration: 500,
+    });
   };
 
-  const hideform = () => {
-    setIsFormVisible(false);
+  const hideForm = () => {
+    formPos.value = withTiming(SCREENWIDTH, {
+      duration: 500,
+    });
 
     Keyboard.dismiss();
   };
@@ -85,7 +78,7 @@ export default function Header() {
       });
       displayMsg('Updated Budget');
       setAmount('');
-      hideform();
+      hideForm();
     }
 
     Keyboard.dismiss();
@@ -124,7 +117,7 @@ export default function Header() {
     if (progress().percent <= 75) {
       return '#2dd258';
     } else if (progress().percent < 90) {
-      return '#e2ee11'; // e2ee11
+      return '#e2ee11';
     } else {
       return 'red';
     }
@@ -132,7 +125,48 @@ export default function Header() {
 
   const progressStyle = [styles.progress, {color: progressColor()}];
 
-  const inputFieldContainerStyle = [styles.inputFieldContainer];
+  useEffect(() => {
+    if (Number(progress().percent) > 50 && Number(progress().percent) <= 75) {
+      popup(
+        'Budget Closing In!!!',
+        `You have \u20A6${
+          dailyBudget - amountSpent
+        } remaining to spend today. Spend it wisely.`,
+        require('../../../assets/images/mr_krabs.png'),
+        '#2f3557',
+        7000,
+      );
+    } else if (
+      Number(progress().percent) > 75 &&
+      Number(progress().percent) < 100
+    ) {
+      popup(
+        'Budget Closing In FAST!!!',
+        `You have \u20A6${
+          dailyBudget - amountSpent
+        } remaining to spend today. Careful not to exceed your budget!`,
+        require('../../../assets/images/mr_krabs.png'),
+        'yellow',
+        7000,
+      );
+    } else if (Number(progress().percent) === 100) {
+      popup(
+        'Budget Reached!!!',
+        `You have reached your budget!. That's it for the day. Let's continue tomorrow.`,
+        require('../../../assets/images/mr_krabs.png'),
+        'red',
+        10000,
+      );
+    } else if (Number(progress().percent) > 100) {
+      popup(
+        'Me Moneyyyyyy!!!',
+        `How dare you exceed your budget!. It had better be worth it. Best to leave it at this for the day. Tomorrow's another day`,
+        require('../../../assets/images/app_icon_1.png'),
+        'red',
+        10000,
+      );
+    }
+  }, [progress().percent]);
 
   useEffect(() => {
     getAmountSpent();
@@ -142,17 +176,25 @@ export default function Header() {
     <View style={styles.container}>
       <View>
         <View style={styles.titleContainer}>
-          <Text style={styles.title}>Krabs</Text>
+          <Text allowFontScaling={false} style={styles.title}>
+            Krabs
+          </Text>
           <Image source={logo} style={styles.logo} />
         </View>
-        <Text style={styles.caption}>Spend wisely.</Text>
-        <Text style={styles.caption}>Make smarter decisions.</Text>
+        <Text allowFontScaling={false} style={styles.caption}>
+          Spend wisely.
+        </Text>
+        <Text allowFontScaling={false} style={styles.caption}>
+          Make smarter decisions.
+        </Text>
       </View>
 
       <View style={styles.headerRight}>
         <View>
-          <Text style={styles.budgetTitle}>Daily Budget</Text>
-          <Text style={styles.budget}>
+          <Text allowFontScaling={false} style={styles.budgetTitle}>
+            Daily Budget
+          </Text>
+          <Text allowFontScaling={false} style={styles.budget}>
             {'\u20A6'}
             {dailyBudget}
           </Text>
@@ -161,7 +203,9 @@ export default function Header() {
             value={progress().value}
             variant="determinate"
           />
-          <Text style={progressStyle}>{progress().percent}%</Text>
+          <Text allowFontScaling={false} style={progressStyle}>
+            {progress().percent}%
+          </Text>
         </View>
 
         <Icon
@@ -175,39 +219,37 @@ export default function Header() {
       </View>
 
       {/* Form to add budget */}
-      {isFormVisible ? (
-        <View style={inputFieldContainerStyle}>
+      <Animated.View style={[styles.inputFieldContainer, animatedStyle]}>
+        <Icon
+          name="chevron-forward-outline"
+          type="ionicon"
+          size={20}
+          color="white"
+          onPress={hideForm}
+          iconStyle={{marginRight: 5}}
+        />
+        <TextInput
+          placeholder="Your budget"
+          placeholderTextColor="#ccc"
+          value={amount}
+          onChangeText={addAmount}
+          onSubmitEditing={addBudget}
+          maxLength={17}
+          returnKeyType="go"
+          keyboardType="number-pad"
+          style={styles.inputField}
+        />
+
+        <TouchableOpacity onPress={addBudget}>
           <Icon
-            name="chevron-forward-outline"
+            name="checkmark-circle-outline"
             type="ionicon"
             size={20}
-            color="white"
-            onPress={hideform}
-            iconStyle={{marginRight: 5}}
+            color="#5c5"
+            style={{marginLeft: 5}}
           />
-          <TextInput
-            placeholder="Your budget"
-            placeholderTextColor="#ccc"
-            value={amount}
-            onChangeText={addAmount}
-            onSubmitEditing={addBudget}
-            maxLength={17}
-            returnKeyType="go"
-            keyboardType="number-pad"
-            style={styles.inputField}
-          />
-
-          <TouchableOpacity onPress={addBudget}>
-            <Icon
-              name="checkmark-circle-outline"
-              type="ionicon"
-              size={20}
-              color="#5c5"
-              style={{marginLeft: 5}}
-            />
-          </TouchableOpacity>
-        </View>
-      ) : null}
+        </TouchableOpacity>
+      </Animated.View>
     </View>
   );
 }

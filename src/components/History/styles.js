@@ -1,9 +1,9 @@
-import {StyleSheet} from 'react-native';
+import {StyleSheet, Platform} from 'react-native';
 
 export const styles = StyleSheet.create({
   container: {
-    flex: 1.3,
-    paddingVertical: 15,
+    flex: Platform.OS === 'ios' ? 1.5 : 1.3,
+    padding: Platform.OS === 'ios' ? 15 : 10,
   },
   title: {
     fontSize: 23,

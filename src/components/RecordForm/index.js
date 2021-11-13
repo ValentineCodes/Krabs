@@ -46,6 +46,13 @@ export default ({onRender, resetFormVisibility}) => {
   let recordDate = useRef('');
   let recordId = useRef('');
 
+  const displayMsg = (msg) => {
+    toast.show(msg, {
+      type: 'success',
+      duration: 2000,
+    });
+  };
+
   // const formPos = useSharedValue(SCREENHEIGHT / 1.76);
 
   // const animatedStyle = useAnimatedStyle(() => {
@@ -95,10 +102,6 @@ export default ({onRender, resetFormVisibility}) => {
     recordDate.current = '';
     recordId.current = '';
     resetFormVisibility();
-  };
-
-  const displayMsg = (msg) => {
-    toast.show(msg);
   };
 
   const addAmount = (val) => {
@@ -223,7 +226,9 @@ export default ({onRender, resetFormVisibility}) => {
       {isFormVisible ? (
         <View style={formContainerStyle}>
           <View style={styles.header}>
-            <Text style={styles.title}>{headerText}</Text>
+            <Text allowFontScaling={false} style={styles.title}>
+              {headerText}
+            </Text>
             <Icon
               name="close-outline"
               type="ionicon"

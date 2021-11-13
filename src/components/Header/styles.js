@@ -1,4 +1,4 @@
-import {StyleSheet, Dimensions} from 'react-native';
+import {StyleSheet, Dimensions, Platform} from 'react-native';
 
 import {COLORS} from '../../constants/colors';
 
@@ -10,10 +10,11 @@ export const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'flex-start',
     paddingVertical: 10,
+    paddingHorizontal: Platform.OS === 'ios' ? 15 : 10,
   },
   titleContainer: {flexDirection: 'row', alignItems: 'center'},
   title: {
-    fontSize: 23,
+    fontSize: SCREENWIDTH * 0.05,
     fontWeight: 'bold',
     color: COLORS.header,
     marginTop: -3,
@@ -21,7 +22,8 @@ export const styles = StyleSheet.create({
   logo: {width: 20, height: 20, marginLeft: 5, marginBottom: 5},
   caption: {
     fontWeight: 'bold',
-    marginTop: -5,
+    fontSize: SCREENWIDTH * 0.03,
+    marginTop: Platform.OS === 'ios' ? 0 : -3,
     color: COLORS.secondary,
   },
 
@@ -30,27 +32,30 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
   },
   budgetTitle: {
-    fontSize: 18,
+    fontSize: SCREENWIDTH * 0.04,
     fontWeight: 'bold',
     color: COLORS.header,
   },
   budget: {
     fontWeight: 'bold',
-    marginTop: -3,
+    fontSize: SCREENWIDTH * 0.03,
+    marginTop: Platform.OS === 'ios' ? 0 : -3,
+    marginVertical: 3,
     color: COLORS.amount,
   },
   inputFieldContainer: {
     flexDirection: 'row',
     alignItems: 'center',
     position: 'absolute',
-    right: 0,
     top: 10,
     backgroundColor: COLORS.primary,
     width: SCREENWIDTH * 0.45,
+    height: '100%',
     borderBottomWidth: 4,
     borderLeftWidth: 4,
     borderRadius: 5,
     borderColor: '#2e3356',
+    paddingHorizontal: 10,
   },
   inputField: {
     color: COLORS.amount,
@@ -59,6 +64,7 @@ export const styles = StyleSheet.create({
   },
   progress: {
     fontWeight: 'bold',
-    fontSize: 12,
+    fontSize: SCREENWIDTH * 0.03,
+    marginTop: Platform.OS === 'ios' ? 3 : 0,
   },
 });

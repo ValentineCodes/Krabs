@@ -1,6 +1,8 @@
-import {StyleSheet} from 'react-native';
+import {StyleSheet, Dimensions, Platform} from 'react-native';
 
 import {COLORS} from '../../constants/colors';
+
+const SCREENWIDTH = Dimensions.get('screen').width;
 
 export const styles = StyleSheet.create({
   headerContainer: {
@@ -17,16 +19,23 @@ export const styles = StyleSheet.create({
   dropdownStyle: {backgroundColor: COLORS.primary, borderRadius: 10},
   dropdownRowTextStyle: {color: 'white', fontSize: 15},
   dropdownRowStyle: {borderBottomColor: COLORS.faintWhite},
+  amountContainer: {
+    alignItems: 'flex-end',
+  },
   amount: {
     marginRight: 15,
     fontWeight: 'bold',
-    fontSize: 16,
+    fontSize: SCREENWIDTH * 0.04,
     color: COLORS.amount,
+  },
+  avgAmt: {
+    fontSize: SCREENWIDTH * 0.03,
   },
   chart: {
     borderRadius: 16,
     backgroundColor: COLORS.tertiary,
     marginVertical: 8,
+    marginHorizontal: Platform.OS === 'ios' ? 15 : 10,
   },
   chartStyle: {
     marginVertical: 8,

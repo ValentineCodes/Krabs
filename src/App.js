@@ -1,26 +1,34 @@
 import React, {useEffect, useRef} from 'react';
 import {
   SafeAreaView,
-  View,
+  StatusBar,
   ScrollView,
   StyleSheet,
   BackHandler,
 } from 'react-native';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {ToastProvider} from 'react-native-toast-notifications';
-// import RNBootSplash from 'react-native-bootsplash';
+import RNBootSplash from 'react-native-bootsplash';
+import {useSelector, useDispatch} from 'react-redux';
+import {Icon} from 'react-native-elements';
 
 import Header from './components/Header/index';
 import Chart from './components/Chart/index';
 import History from './components/History/index';
 import RecordForm from './components/RecordForm/index';
+import Popup from './components/Popup';
 
 import {COLORS} from './constants/colors';
 
 let showForm;
 let hideForm;
 
+let showPopupModal;
+
 const App = () => {
+  const dispatch = useDispatch();
+  const firstTime = useSelector((state) => state.init);
+
   let isFormOpen = useRef(false);
 
   const showRecordForm = (
@@ -39,6 +47,12 @@ const App = () => {
     isFormOpen.current = false;
   };
 
+  const showPopup = (title, msg, img, color, duration) => {
+    setTimeout(() => {
+      showPopupModal(title, msg, img, color, duration);
+    }, 2000);
+  };
+
   const backHandler = BackHandler.addEventListener('hardwareBackPress', () => {
     if (isFormOpen.current) {
       hideForm();
@@ -50,7 +64,24 @@ const App = () => {
   });
 
   useEffect(() => {
-    // RNBootSplash.hide({fade: true});
+    RNBootSplash.hide({fade: true});
+
+    if (firstTime) {
+      setTimeout(() => {
+        showPopup(
+          'Welcome To Krabs!',
+          '"You must know where your money is going if you want to build wealth."',
+          require('../assets/images/mr_krabs.png'),
+          COLORS.amount,
+          10000,
+        );
+
+        dispatch({
+          type: 'updateInit',
+          payload: false,
+        });
+      }, 2000);
+    }
 
     return () => {
       backHandler.remove();
@@ -60,7 +91,8 @@ const App = () => {
     <SafeAreaProvider>
       <ToastProvider>
         <SafeAreaView style={styles.container}>
-          <Header />
+          <StatusBar backgroundColor={COLORS.primary} />
+          <Header popup={showPopup} />
 
           <ScrollView
             showsVerticalScrollIndicator={false}
@@ -77,6 +109,12 @@ const App = () => {
             }}
             resetFormVisibility={resetFormVisibility}
           />
+
+          <Popup
+            onRender={(show) => {
+              showPopupModal = show;
+            }}
+          />
         </SafeAreaView>
       </ToastProvider>
     </SafeAreaProvider>
@@ -87,7 +125,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: COLORS.primary,
-    paddingHorizontal: 15,
   },
   scrollView: {flex: 1},
 });

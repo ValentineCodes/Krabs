@@ -1,4 +1,4 @@
-import {StyleSheet, Dimensions} from 'react-native';
+import {StyleSheet, Dimensions, Platform} from 'react-native';
 
 import {COLORS} from '../../constants/colors';
 
@@ -9,8 +9,7 @@ export const styles = StyleSheet.create({
     position: 'absolute',
     width: SCREENWIDTH,
     bottom: 0,
-    paddingHorizontal: 15,
-    paddingVertical: 15,
+    padding: 15,
     borderTopRightRadius: 20,
     borderTopLeftRadius: 20,
     borderWidth: 3,
@@ -24,12 +23,13 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
   },
   title: {
-    fontSize: 23,
+    fontSize: SCREENWIDTH * 0.05,
     fontWeight: 'bold',
     color: COLORS.header,
   },
   inputField: {
-    marginTop: 10,
+    marginVertical: Platform.OS === 'ios' ? 15 : 10,
+    padding: 5,
     borderBottomWidth: 0.5,
     borderBottomColor: COLORS.faintWhite,
     fontSize: 16,
@@ -39,7 +39,6 @@ export const styles = StyleSheet.create({
   categoryContainer: {
     width: 110,
     height: 30,
-    marginTop: 5,
     backgroundColor: COLORS.primary,
     borderBottomWidth: 0.5,
     borderColor: COLORS.faintWhite,

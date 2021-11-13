@@ -42,7 +42,9 @@ export default function ({onSelectCategory, onPressAdd}) {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>History</Text>
+      <Text allowFontScaling={false} style={styles.title}>
+        History
+      </Text>
 
       <View style={styles.headerRight}>
         <SelectDropdown
@@ -59,7 +61,7 @@ export default function ({onSelectCategory, onPressAdd}) {
           renderDropdownIcon={dropdownicon}
         />
 
-        <View style={styles.addBtn}>
+        <View style={styles.btn}>
           <Icon
             name="add-outline"
             type="ionicon"
@@ -67,13 +69,9 @@ export default function ({onSelectCategory, onPressAdd}) {
             onPress={() => onPressAdd()}
           />
         </View>
-
-        {/* <Icon
-          name="chevron-up-outline"
-          type="ionicon"
-          color="#ccc"
-          style={{marginRight: 10}}
-        /> */}
+        <View style={styles.btn}>
+          <Icon name="cog-outline" type="ionicon" color="#fff" />
+        </View>
       </View>
     </View>
   );

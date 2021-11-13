@@ -6,13 +6,18 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 // Reducers
 import records from '../redux/reducers/records';
 import dailyBudget from '../redux/reducers/dailyBudget';
+import init from '../redux/reducers/init';
 
 const persistConfig = {
   key: 'root',
   storage: AsyncStorage,
 };
 
-const reducers = combineReducers({records: records, dailyBudget: dailyBudget});
+const reducers = combineReducers({
+  records: records,
+  dailyBudget: dailyBudget,
+  init: init,
+});
 
 const persistedReducer = persistReducer(persistConfig, reducers);
 
