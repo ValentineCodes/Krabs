@@ -4,11 +4,11 @@ import {Icon} from 'react-native-elements';
 import SelectDropdown from 'react-native-select-dropdown';
 import {useDispatch} from 'react-redux';
 import {useToast} from 'react-native-toast-notifications';
-// import Animated, {
-//   useSharedValue,
-//   useAnimatedStyle,
-//   withTiming,
-// } from 'react-native-reanimated';
+import Animated, {
+  useSharedValue,
+  useAnimatedStyle,
+  withTiming,
+} from 'react-native-reanimated';
 
 import {getTimestamp} from '../../constants/helperFns';
 
@@ -30,7 +30,6 @@ const CATEGORIES = [
   'Miscellaneous',
 ];
 
-const SCREENWIDTH = Dimensions.get('screen').width;
 const SCREENHEIGHT = Dimensions.get('screen').height;
 
 export default ({onRender, resetFormVisibility}) => {
@@ -53,28 +52,18 @@ export default ({onRender, resetFormVisibility}) => {
     });
   };
 
-  // const formPos = useSharedValue(SCREENHEIGHT / 1.76);
+  const offset = useSharedValue(SCREENHEIGHT);
 
-  // const animatedStyle = useAnimatedStyle(() => {
-  //   return {
-  //     transform: [{translateY: formPos.value}],
-  //   };
-  // });
-
-  // const showForm = () => {
-  //   formPos.value = withTiming(SCREENHEIGHT / 1.76, {
-  //     duration: 500,
-  //   });
-  // };
-
-  // const hideForm = () => {
-  //   formPos.value = withTiming(750, {
-  //     duration: 500,
-  //   });
-  // };
+  const animatedStyle = useAnimatedStyle(() => {
+    return {
+      transform: [{translateY: offset.value}],
+    };
+  });
 
   const showForm = (date, id, description, category, amount, action) => {
-    setIsFormVisible(true);
+    offset.value = withTiming(SCREENHEIGHT * 0.58, {
+      duration: 500,
+    });
 
     if (action === 'addRecord') {
       recordId.current = '';
@@ -93,6 +82,10 @@ export default ({onRender, resetFormVisibility}) => {
   };
 
   const hideForm = () => {
+    offset.value = withTiming(SCREENHEIGHT, {
+      duration: 500,
+    });
+
     Keyboard.dismiss();
     setIsFormVisible(false);
     setIsEditing(false);
@@ -106,7 +99,7 @@ export default ({onRender, resetFormVisibility}) => {
 
   const addAmount = (val) => {
     if (isNaN(val) === true) {
-      displayMsg('Only number are allowed.');
+      displayMsg('Positive numbers only.');
     } else {
       setAmount(val);
     }
@@ -222,75 +215,71 @@ export default ({onRender, resetFormVisibility}) => {
   }, []);
 
   return (
-    <>
-      {isFormVisible ? (
-        <View style={formContainerStyle}>
-          <View style={styles.header}>
-            <Text allowFontScaling={false} style={styles.title}>
-              {headerText}
-            </Text>
-            <Icon
-              name="close-outline"
-              type="ionicon"
-              color="white"
-              size={30}
-              onPress={hideForm}
-            />
-          </View>
+    <Animated.View style={[formContainerStyle, animatedStyle]}>
+      <View style={styles.header}>
+        <Text allowFontScaling={false} style={styles.title}>
+          {headerText}
+        </Text>
+        <Icon
+          name="close-outline"
+          type="ionicon"
+          color="white"
+          size={30}
+          onPress={hideForm}
+        />
+      </View>
 
-          {/* Description */}
-          <TextInput
-            placeholder="Description..."
-            placeholderTextColor="white"
-            value={description}
-            maxLength={100}
-            returnKeyType="go"
-            style={styles.inputField}
-            onChangeText={setDescription}
-            onSubmitEditing={handleOnSubmit}
-            selectTextOnFocus
-          />
+      {/* Description */}
+      <TextInput
+        placeholder="Description..."
+        placeholderTextColor="white"
+        value={description}
+        maxLength={100}
+        returnKeyType="go"
+        style={styles.inputField}
+        onChangeText={setDescription}
+        onSubmitEditing={handleOnSubmit}
+        selectTextOnFocus
+      />
 
-          {/* Category */}
-          <SelectDropdown
-            data={CATEGORIES}
-            defaultValue={category}
-            buttonStyle={styles.categoryContainer}
-            buttonTextStyle={styles.category}
-            dropdownStyle={styles.dropdownStyle}
-            rowTextStyle={styles.dropdownRowTextStyle}
-            rowStyle={styles.dropdownRowStyle}
-            onSelect={handleOnSelectCategory}
-            buttonTextAfterSelection={handleButtonTextAfterSelection}
-            rowTextForSelection={handleRowTextForSelection}
-            renderDropdownIcon={dropdownIcon}
-          />
+      {/* Category */}
+      <SelectDropdown
+        data={CATEGORIES}
+        defaultValue={category}
+        buttonStyle={styles.categoryContainer}
+        buttonTextStyle={styles.category}
+        dropdownStyle={styles.dropdownStyle}
+        rowTextStyle={styles.dropdownRowTextStyle}
+        rowStyle={styles.dropdownRowStyle}
+        onSelect={handleOnSelectCategory}
+        buttonTextAfterSelection={handleButtonTextAfterSelection}
+        rowTextForSelection={handleRowTextForSelection}
+        renderDropdownIcon={dropdownIcon}
+      />
 
-          {/* Amount */}
-          <TextInput
-            placeholder="Amount"
-            placeholderTextColor="#0beaaf"
-            value={amount}
-            maxLength={17}
-            returnKeyType="go"
-            keyboardType="number-pad"
-            style={amountInputStyle}
-            onChangeText={addAmount}
-            onSubmitEditing={handleOnSubmit}
-            selectTextOnFocus
-          />
+      {/* Amount */}
+      <TextInput
+        placeholder="Amount"
+        placeholderTextColor="#0beaaf"
+        value={amount}
+        maxLength={17}
+        returnKeyType="go"
+        keyboardType="number-pad"
+        style={amountInputStyle}
+        onChangeText={addAmount}
+        onSubmitEditing={handleOnSubmit}
+        selectTextOnFocus
+      />
 
-          {/* Add Record */}
-          <View style={addButtonStyle}>
-            <Icon
-              name="add-outline"
-              type="ionicon"
-              color="white"
-              onPress={handleOnSubmit}
-            />
-          </View>
-        </View>
-      ) : null}
-    </>
+      {/* Add Record */}
+      <View style={addButtonStyle}>
+        <Icon
+          name="add-outline"
+          type="ionicon"
+          color="white"
+          onPress={handleOnSubmit}
+        />
+      </View>
+    </Animated.View>
   );
 };

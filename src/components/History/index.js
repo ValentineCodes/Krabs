@@ -9,15 +9,15 @@ import Header from './Header/index';
 import Record from './Record/index';
 import {COLORS} from '../../constants/colors';
 
-export default function ({onPressAdd}) {
-  const records = useSelector(state => Object.entries(state.records));
+export default function ({onPressAdd, navigation}) {
+  const records = useSelector((state) => Object.entries(state.records));
 
   const [selectedCategory, setSelectedCategory] = useState('All');
-  const getExpenses = expenses => {
+  const getExpenses = (expenses) => {
     if (selectedCategory === 'All') {
       return expenses;
     } else {
-      return expenses.filter(data => data.category === selectedCategory);
+      return expenses.filter((data) => data.category === selectedCategory);
     }
   };
 
@@ -34,11 +34,15 @@ export default function ({onPressAdd}) {
     );
   };
 
-  const recordKeyExtractor = record => record[0];
+  const recordKeyExtractor = (record) => record[0];
 
   return (
     <View style={styles.container}>
-      <Header onSelectCategory={setSelectedCategory} onPressAdd={onPressAdd} />
+      <Header
+        onSelectCategory={setSelectedCategory}
+        onPressAdd={onPressAdd}
+        navigation={navigation}
+      />
 
       {records.length !== 0 ? (
         <FlatList

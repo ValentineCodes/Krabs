@@ -27,6 +27,7 @@ export default function Header({popup}) {
   const toast = useToast();
   const dispatch = useDispatch();
   const records = useSelector((state) => state.records[getTimestamp().date]);
+  const currency = useSelector((state) => state.currency);
 
   const dailyBudget = useSelector((state) => state.dailyBudget);
 
@@ -63,8 +64,8 @@ export default function Header({popup}) {
   };
 
   const addAmount = (val) => {
-    if (isNaN(val) === true) {
-      displayMsg('Only number are allowed.');
+    if (isNaN(val)) {
+      displayMsg('Positive numbers only.');
     } else {
       setAmount(val);
     }
@@ -195,7 +196,7 @@ export default function Header({popup}) {
             Daily Budget
           </Text>
           <Text allowFontScaling={false} style={styles.budget}>
-            {'\u20A6'}
+            {currency}
             {dailyBudget}
           </Text>
           <LinearProgress

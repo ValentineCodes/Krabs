@@ -46,7 +46,7 @@ const CATEGORIES = [
 
 export default function () {
   const records = useSelector((state) => state.records);
-
+  const currency = useSelector((state) => state.currency);
   const labelLength = useRef(7);
   const category = useRef('All');
 
@@ -323,11 +323,11 @@ export default function () {
 
         <View style={styles.amountContainer}>
           <Text allowFontScaling={false} style={styles.amount}>
-            {'\u20A6'}
+            {currency}
             {getTotalAmount()}
           </Text>
           <Text allowFontScaling={false} style={[styles.amount, styles.avgAmt]}>
-            a.v.g {'\u21D2'} {'\u20A6'}
+            a.v.g {'\u21D2'} {currency}
             {(getTotalAmount() / labelLength.current).toFixed(2)}{' '}
             {labelLength.current === 12 ? 'PM' : 'PD'}
           </Text>

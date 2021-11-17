@@ -1,7 +1,7 @@
 import React, {useMemo} from 'react';
 import {View, Text, Alert} from 'react-native';
 import {Icon} from 'react-native-elements';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 
 import {getTimestamp} from '../../../constants/helperFns';
 
@@ -17,6 +17,7 @@ const Record = ({
   onPressEdit,
 }) => {
   const dispatch = useDispatch();
+  const currency = useSelector((state) => state.currency);
 
   const editRecord = () =>
     onPressEdit(date, id, description, category, amount, 'editRecord');
@@ -63,7 +64,7 @@ const Record = ({
             {category}
           </Text>
           <Text allowFontScaling={false} style={styles.amount}>
-            {'\u20A6'}
+            {currency}
             {amount}
           </Text>
 
@@ -88,7 +89,7 @@ const Record = ({
         </View>
       </View>
     ),
-    [id, date, time, description, category, amount, onPressEdit],
+    [id, date, time, description, category, amount, currency, onPressEdit],
   );
 
   return <>{renderRecord}</>;

@@ -39,7 +39,7 @@ export const styles = StyleSheet.create({
   budget: {
     fontWeight: 'bold',
     fontSize: SCREENWIDTH * 0.03,
-    marginTop: Platform.OS === 'ios' ? 0 : -3,
+    marginTop: Platform.OS === 'ios' ? 0 : -1,
     marginVertical: 3,
     color: COLORS.amount,
   },

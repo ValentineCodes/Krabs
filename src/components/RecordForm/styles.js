@@ -3,12 +3,14 @@ import {StyleSheet, Dimensions, Platform} from 'react-native';
 import {COLORS} from '../../constants/colors';
 
 const SCREENWIDTH = Dimensions.get('screen').width;
+const SCREENHEIGHT = Dimensions.get('screen').height;
 
 export const styles = StyleSheet.create({
   container: {
     position: 'absolute',
+    top: 0,
     width: SCREENWIDTH,
-    bottom: 0,
+    height: SCREENHEIGHT * 0.35,
     padding: 15,
     borderTopRightRadius: 20,
     borderTopLeftRadius: 20,

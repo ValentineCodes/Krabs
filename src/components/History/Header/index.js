@@ -22,7 +22,7 @@ const CATEGORIES = [
   'Miscellaneous',
 ];
 
-export default function ({onSelectCategory, onPressAdd}) {
+export default function ({onSelectCategory, onPressAdd, navigation}) {
   const handleOnSelectCategory = (selectedItem, index) => {
     onSelectCategory(selectedItem);
   };
@@ -70,7 +70,12 @@ export default function ({onSelectCategory, onPressAdd}) {
           />
         </View>
         <View style={styles.btn}>
-          <Icon name="cog-outline" type="ionicon" color="#fff" />
+          <Icon
+            name="cog-outline"
+            type="ionicon"
+            color="#fff"
+            onPress={() => navigation.navigate('Settings')}
+          />
         </View>
       </View>
     </View>
