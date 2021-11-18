@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect} from 'react';
 import {
   View,
   Text,
@@ -8,19 +8,11 @@ import {
   ScrollView,
   TouchableOpacity,
   Switch,
-  TextInput,
-  Keyboard,
-  Modal,
+  BackHandler,
 } from 'react-native';
 import {Icon} from 'react-native-elements';
 import SelectDropdown from 'react-native-select-dropdown';
 import {useSelector, useDispatch} from 'react-redux';
-import {useToast} from 'react-native-toast-notifications';
-import Animated, {
-  useSharedValue,
-  useAnimatedStyle,
-  withTiming,
-} from 'react-native-reanimated';
 
 import {COLORS} from '../constants/colors';
 
@@ -83,24 +75,12 @@ const CURRENCIES = [
 const THEME = ['Dark', 'Light', 'System Default'];
 
 const SCREENWIDTH = Dimensions.get('screen').width;
-const SCREENHEIGHT = Dimensions.get('screen').height;
 
 const Settings = ({navigation}) => {
-  const toast = useToast();
   const dispatch = useDispatch();
 
   const appLock = useSelector((state) => state.appLock);
   const currency = useSelector((state) => state.currency);
-
-  const [currentPassword, setCurrentPassword] = useState('');
-  const [newPassword, setNewPassword] = useState('');
-
-  const displayMsg = (msg, type) => {
-    toast.show(msg, {
-      type,
-      duration: 2000,
-    });
-  };
 
   const dropdownIcon = () => (
     <Icon
@@ -124,32 +104,20 @@ const Settings = ({navigation}) => {
     });
   };
 
-  const handleOnSubmitPassword = () => {
-    if (currentPassword.trim() === appLock.password && newPassword.trim()) {
-      dispatch({
-        type: 'updateAppLockPassword',
-        payload: newPassword.trim(),
-      });
-
-      displayMsg('Password Changed Successfully', 'success');
-    } else {
-      displayMsg('Incorrect Password', 'danger');
-    }
-
-    Keyboard.dismiss();
-  };
-
   let appLockIcon = appLock.enabled
     ? 'lock-closed-outline'
     : 'lock-open-outline';
 
-  let addButtonStyle = [
-    styles.addBtn,
-    {
-      backgroundColor:
-        currentPassword.trim() && newPassword.trim() ? '#3269ff' : '#2f3557',
-    },
-  ];
+  const backHandler = BackHandler.addEventListener('hardwareBackPress', () => {
+    navigation.goBack();
+    return true;
+  });
+
+  useEffect(() => {
+    return () => {
+      backHandler.remove();
+    };
+  }, []);
 
   return (
     <View style={styles.container}>
@@ -303,9 +271,19 @@ const Settings = ({navigation}) => {
               color="white"
               style={styles.settingIcon}
             />
-            <Text allowFontScaling={false} style={styles.settingTitle}>
-              Change Password
-            </Text>
+            <View>
+              <Text allowFontScaling={false} style={styles.settingTitle}>
+                Change Password
+              </Text>
+
+              {appLock.isDefault === true && (
+                <View style={styles.appLockMethodContainer}>
+                  <Text allowFontScaling={false} style={styles.appLockMethod}>
+                    Default: 'Mr.Krabs'
+                  </Text>
+                </View>
+              )}
+            </View>
           </View>
         </TouchableOpacity>
 
@@ -324,51 +302,6 @@ const Settings = ({navigation}) => {
           </View>
         </TouchableOpacity>
       </ScrollView>
-
-      {/* Animated input field for changing password */}
-      {/* <View style={[styles.passwordInputFieldContainer]}>
-        <View style={{marginBottom: 50, marginTop: -150}}>
-          <Icon
-            name="lock-closed"
-            type="ionicon"
-            color="yellow"
-            size={SCREENWIDTH * 0.2}
-          />
-        </View>
-        <Text style={{...styles.headerText, marginBottom: 50}}>
-          Shield your records from prying eyes
-        </Text>
-        <TextInput
-          placeholder="Current Password"
-          placeholderTextColor={COLORS.faintWhite}
-          value={currentPassword}
-          maxLength={15}
-          returnKeyType="go"
-          style={styles.passwordInputField}
-          onChangeText={setCurrentPassword}
-          onSubmitEditing={handleOnSubmitPassword}
-        />
-
-        <TextInput
-          placeholder="New Password"
-          placeholderTextColor={COLORS.faintWhite}
-          value={newPassword}
-          maxLength={15}
-          returnKeyType="go"
-          style={styles.passwordInputField}
-          onChangeText={setNewPassword}
-          onSubmitEditing={handleOnSubmitPassword}
-        />
-
-        <View style={addButtonStyle}>
-          <Icon
-            name="add-outline"
-            type="ionicon"
-            color="white"
-            onPress={handleOnSubmitPassword}
-          />
-        </View>
-      </View> */}
     </View>
   );
 };
@@ -443,31 +376,6 @@ const styles = StyleSheet.create({
   dropdownStyle: {backgroundColor: COLORS.primary, borderRadius: 10},
   dropdownRowTextStyle: {color: 'white', fontSize: 12},
   dropdownRowStyle: {borderBottomColor: COLORS.faintWhite},
-
-  passwordInputFieldContainer: {
-    position: 'absolute',
-    width: SCREENWIDTH,
-    height: SCREENHEIGHT,
-    backgroundColor: COLORS.primary,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  passwordInputField: {
-    padding: 5,
-    borderBottomWidth: 0.5,
-    borderBottomColor: 'white',
-    fontSize: 16,
-    color: 'white',
-    textAlign: 'center',
-    marginBottom: 30,
-  },
-
-  addBtn: {
-    alignSelf: 'center',
-    padding: 10,
-    marginTop: 10,
-    borderRadius: 15,
-  },
 });
 
 export default Settings;

@@ -47,7 +47,7 @@ const LockScreen = ({navigation}) => {
 
   return (
     <View style={[styles.container]}>
-      <View style={{marginBottom: 50, marginTop: -150}}>
+      <View style={{marginBottom: 50}}>
         <Icon
           name="lock-closed"
           type="ionicon"
@@ -66,6 +66,8 @@ const LockScreen = ({navigation}) => {
         style={styles.inputField}
         onChangeText={setPassword}
         onSubmitEditing={handleOnSubmit}
+        secureTextEntry
+        autoFocus
       />
 
       <View style={addButtonStyle}>

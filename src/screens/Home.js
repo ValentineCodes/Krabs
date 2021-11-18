@@ -59,7 +59,7 @@ const Home = ({navigation}) => {
         showPopup(
           'Welcome To Krabs!',
           '"You must know where your money is going if you want to build wealth."',
-          require('../../assets/images/mr_krabs.png'),
+          require('../../assets/images/app_icon_2.png'),
           COLORS.amount,
           10000,
         );
