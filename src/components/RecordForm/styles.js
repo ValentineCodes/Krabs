@@ -6,14 +6,20 @@ const SCREENWIDTH = Dimensions.get('screen').width;
 const SCREENHEIGHT = Dimensions.get('screen').height;
 
 export const styles = StyleSheet.create({
-  container: {
+  formWrapper: {
     position: 'absolute',
     top: 0,
     width: SCREENWIDTH,
+    height: SCREENHEIGHT,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0,0,0,0.5)',
+  },
+  container: {
+    width: SCREENWIDTH,
     height: SCREENHEIGHT * 0.35,
     padding: 15,
-    borderTopRightRadius: 20,
-    borderTopLeftRadius: 20,
+    borderRadius: 20,
     borderWidth: 3,
     borderBottomWidth: 0,
     borderColor: '#2f3557',

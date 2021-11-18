@@ -53,16 +53,21 @@ export default ({onRender, resetFormVisibility}) => {
   };
 
   const offset = useSharedValue(SCREENHEIGHT);
+  const opacity = useSharedValue(0);
 
   const animatedStyle = useAnimatedStyle(() => {
     return {
       transform: [{translateY: offset.value}],
+      opacity: opacity.value,
     };
   });
 
   const showForm = (date, id, description, category, amount, action) => {
-    offset.value = withTiming(SCREENHEIGHT * 0.58, {
+    offset.value = withTiming(0, {
       duration: 500,
+    });
+    opacity.value = withTiming(1, {
+      duration: 700,
     });
 
     if (action === 'addRecord') {
@@ -84,6 +89,9 @@ export default ({onRender, resetFormVisibility}) => {
   const hideForm = () => {
     offset.value = withTiming(SCREENHEIGHT, {
       duration: 500,
+    });
+    opacity.value = withTiming(0, {
+      duration: 700,
     });
 
     Keyboard.dismiss();
@@ -188,8 +196,6 @@ export default ({onRender, resetFormVisibility}) => {
     }
   };
 
-  let formContainerStyle = [styles.container];
-
   let headerText = isEditing ? 'Edit Record' : 'New Record';
 
   let amountInputStyle = [
@@ -215,70 +221,72 @@ export default ({onRender, resetFormVisibility}) => {
   }, []);
 
   return (
-    <Animated.View style={[formContainerStyle, animatedStyle]}>
-      <View style={styles.header}>
-        <Text allowFontScaling={false} style={styles.title}>
-          {headerText}
-        </Text>
-        <Icon
-          name="close-outline"
-          type="ionicon"
-          color="white"
-          size={30}
-          onPress={hideForm}
+    <Animated.View style={[styles.formWrapper, animatedStyle]}>
+      <View style={styles.container}>
+        <View style={styles.header}>
+          <Text allowFontScaling={false} style={styles.title}>
+            {headerText}
+          </Text>
+          <Icon
+            name="close-outline"
+            type="ionicon"
+            color="white"
+            size={30}
+            onPress={hideForm}
+          />
+        </View>
+
+        {/* Description */}
+        <TextInput
+          placeholder="Description..."
+          placeholderTextColor="white"
+          value={description}
+          maxLength={100}
+          returnKeyType="go"
+          style={styles.inputField}
+          onChangeText={setDescription}
+          onSubmitEditing={handleOnSubmit}
+          selectTextOnFocus
         />
-      </View>
 
-      {/* Description */}
-      <TextInput
-        placeholder="Description..."
-        placeholderTextColor="white"
-        value={description}
-        maxLength={100}
-        returnKeyType="go"
-        style={styles.inputField}
-        onChangeText={setDescription}
-        onSubmitEditing={handleOnSubmit}
-        selectTextOnFocus
-      />
-
-      {/* Category */}
-      <SelectDropdown
-        data={CATEGORIES}
-        defaultValue={category}
-        buttonStyle={styles.categoryContainer}
-        buttonTextStyle={styles.category}
-        dropdownStyle={styles.dropdownStyle}
-        rowTextStyle={styles.dropdownRowTextStyle}
-        rowStyle={styles.dropdownRowStyle}
-        onSelect={handleOnSelectCategory}
-        buttonTextAfterSelection={handleButtonTextAfterSelection}
-        rowTextForSelection={handleRowTextForSelection}
-        renderDropdownIcon={dropdownIcon}
-      />
-
-      {/* Amount */}
-      <TextInput
-        placeholder="Amount"
-        placeholderTextColor="#0beaaf"
-        value={amount}
-        maxLength={17}
-        returnKeyType="go"
-        keyboardType="number-pad"
-        style={amountInputStyle}
-        onChangeText={addAmount}
-        onSubmitEditing={handleOnSubmit}
-        selectTextOnFocus
-      />
-
-      {/* Add Record */}
-      <View style={addButtonStyle}>
-        <Icon
-          name="add-outline"
-          type="ionicon"
-          color="white"
-          onPress={handleOnSubmit}
+        {/* Category */}
+        <SelectDropdown
+          data={CATEGORIES}
+          defaultValue={category}
+          buttonStyle={styles.categoryContainer}
+          buttonTextStyle={styles.category}
+          dropdownStyle={styles.dropdownStyle}
+          rowTextStyle={styles.dropdownRowTextStyle}
+          rowStyle={styles.dropdownRowStyle}
+          onSelect={handleOnSelectCategory}
+          buttonTextAfterSelection={handleButtonTextAfterSelection}
+          rowTextForSelection={handleRowTextForSelection}
+          renderDropdownIcon={dropdownIcon}
         />
+
+        {/* Amount */}
+        <TextInput
+          placeholder="Amount"
+          placeholderTextColor="#0beaaf"
+          value={amount}
+          maxLength={17}
+          returnKeyType="go"
+          keyboardType="number-pad"
+          style={amountInputStyle}
+          onChangeText={addAmount}
+          onSubmitEditing={handleOnSubmit}
+          selectTextOnFocus
+        />
+
+        {/* Add Record */}
+        <View style={addButtonStyle}>
+          <Icon
+            name="add-outline"
+            type="ionicon"
+            color="white"
+            onPress={handleOnSubmit}
+          />
+        </View>
       </View>
     </Animated.View>
   );

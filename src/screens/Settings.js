@@ -13,6 +13,7 @@ import {
 import {Icon} from 'react-native-elements';
 import SelectDropdown from 'react-native-select-dropdown';
 import {useSelector, useDispatch} from 'react-redux';
+import Share from 'react-native-share';
 
 import {COLORS} from '../constants/colors';
 
@@ -104,6 +105,22 @@ const Settings = ({navigation}) => {
     });
   };
 
+  const onShare = () => {
+    const options = {
+      message:
+        '"To build wealth, you must first know where your money is headed"\n\nDownload Krabs App to keep track of all your business and personal expenses.\n\n"Your accountant now lives in your pocket".\n\n',
+      url: 'https://play.google.com/store/apps/details?id=com.activision.callofduty.shooter&hl=en&gl=US',
+    };
+
+    Share.open(options)
+      .then((res) => {
+        return;
+      })
+      .catch((err) => {
+        return;
+      });
+  };
+
   let appLockIcon = appLock.enabled
     ? 'lock-closed-outline'
     : 'lock-open-outline';
@@ -132,7 +149,11 @@ const Settings = ({navigation}) => {
         </Text>
       </View>
 
-      <ScrollView style={{flex: 1}}>
+      <ScrollView
+        style={{flex: 1}}
+        contentContainerStyle={{
+          alignItems: 'center',
+        }}>
         {/* Currency */}
         <View style={styles.settingContainer}>
           <View style={styles.settingHeader}>
@@ -204,7 +225,7 @@ const Settings = ({navigation}) => {
         </View>
 
         {/* Backup */}
-        <TouchableOpacity activeOpacity={0.5} style={styles.settingContainer}>
+        {/* <TouchableOpacity activeOpacity={0.5} style={styles.settingContainer}>
           <View style={styles.settingHeader}>
             <Icon
               name="cloud-upload-outline"
@@ -216,7 +237,7 @@ const Settings = ({navigation}) => {
               Backup Records
             </Text>
           </View>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
 
         {/* App Lock */}
         <View style={styles.settingContainer}>
@@ -233,20 +254,22 @@ const Settings = ({navigation}) => {
                 Lock Krabs
               </Text>
 
-              <View style={styles.appLockMethodContainer}>
+              {/* <View style={styles.appLockMethodContainer}>
                 <Text allowFontScaling={false} style={styles.appLockMethod}>
                   Using {appLock.method}.
                 </Text>
-                <TouchableOpacity onPress={toggleLockMethod}>
-                  <Text
-                    style={[
-                      styles.appLockMethod,
-                      styles.appLockMethodChangeBtn,
-                    ]}>
-                    Change
-                  </Text>
-                </TouchableOpacity>
-              </View>
+                {!Platform.Version < 23 && (
+                  <TouchableOpacity onPress={toggleLockMethod}>
+                    <Text
+                      style={[
+                        styles.appLockMethod,
+                        styles.appLockMethodChangeBtn,
+                      ]}>
+                      Change
+                    </Text>
+                  </TouchableOpacity>
+                )}
+              </View> */}
             </View>
           </View>
 
@@ -271,7 +294,7 @@ const Settings = ({navigation}) => {
               color="white"
               style={styles.settingIcon}
             />
-            <View>
+            <View style={{alignItems: 'center'}}>
               <Text allowFontScaling={false} style={styles.settingTitle}>
                 Change Password
               </Text>
@@ -288,7 +311,10 @@ const Settings = ({navigation}) => {
         </TouchableOpacity>
 
         {/* Share */}
-        <TouchableOpacity activeOpacity={0.5} style={styles.settingContainer}>
+        <TouchableOpacity
+          activeOpacity={0.5}
+          style={styles.settingContainer}
+          onPress={onShare}>
           <View style={styles.settingHeader}>
             <Icon
               name="share-social-outline"
@@ -325,25 +351,25 @@ const styles = StyleSheet.create({
   },
 
   settingContainer: {
-    flexDirection: 'row',
+    justifyContent: 'center',
     alignItems: 'center',
-    justifyContent: 'space-between',
-    borderBottomWidth: 0.5,
+    marginTop: 20,
+    borderWidth: 0.5,
+    width: '50%',
     borderColor: 'rgba(255,255,255,0.3)',
     paddingVertical: 15,
   },
   settingHeader: {
-    flexDirection: 'row',
     alignItems: 'center',
   },
   settingIcon: {
-    marginRight: 15,
     color: 'white',
   },
   settingTitle: {
     fontWeight: 'bold',
     fontSize: SCREENWIDTH * 0.04,
     color: COLORS.header,
+    marginVertical: 10,
   },
   appLockMethodContainer: {
     flexDirection: 'row',
@@ -373,7 +399,11 @@ const styles = StyleSheet.create({
     fontSize: SCREENWIDTH * 0.035,
     color: COLORS.secondary,
   },
-  dropdownStyle: {backgroundColor: COLORS.primary, borderRadius: 10},
+  dropdownStyle: {
+    backgroundColor: COLORS.primary,
+    borderRadius: 10,
+    width: 100,
+  },
   dropdownRowTextStyle: {color: 'white', fontSize: 12},
   dropdownRowStyle: {borderBottomColor: COLORS.faintWhite},
 });

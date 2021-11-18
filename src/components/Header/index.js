@@ -17,7 +17,6 @@ import Animated, {
   withTiming,
 } from 'react-native-reanimated';
 
-import logo from '../../../assets/images/mr_krabs.png';
 import {getTimestamp} from '../../constants/helperFns';
 import {styles} from './styles';
 
@@ -133,7 +132,7 @@ export default function Header({popup}) {
         `You have \u20A6${
           dailyBudget - amountSpent
         } remaining to spend today. Spend it wisely.`,
-        require('../../../assets/images/mr_krabs.png'),
+        require('../../../assets/images/krabs_4.png'),
         '#2f3557',
         7000,
       );
@@ -146,7 +145,7 @@ export default function Header({popup}) {
         `You have \u20A6${
           dailyBudget - amountSpent
         } remaining to spend today. Careful not to exceed your budget!`,
-        require('../../../assets/images/mr_krabs.png'),
+        require('../../../assets/images/krabs_3.png'),
         'yellow',
         7000,
       );
@@ -154,7 +153,7 @@ export default function Header({popup}) {
       popup(
         'Budget Reached!!!',
         `You have reached your budget!. That's it for the day. Let's continue tomorrow.`,
-        require('../../../assets/images/mr_krabs.png'),
+        require('../../../assets/images/krabs_2.png'),
         'red',
         10000,
       );
@@ -180,7 +179,10 @@ export default function Header({popup}) {
           <Text allowFontScaling={false} style={styles.title}>
             Krabs
           </Text>
-          <Image source={logo} style={styles.logo} />
+          <Image
+            source={require('../../../assets/images/krabs_1.png')}
+            style={styles.logo}
+          />
         </View>
         <Text allowFontScaling={false} style={styles.caption}>
           Spend wisely.

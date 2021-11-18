@@ -76,7 +76,7 @@ const Popup = ({onRender}) => {
           {data.msg}
         </Text>
       </View>
-      <Image source={data.img} style={styles.img} />
+      <Image source={data.img} style={styles.img} resizeMode="contain" />
     </Animated.View>
   );
 };
@@ -111,8 +111,8 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   img: {
-    width: 50,
-    height: 70,
+    width: 70,
+    height: 90,
   },
 });
 
