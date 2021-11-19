@@ -97,7 +97,6 @@ const ChangePassword = ({navigation}) => {
       <Text
         style={{
           ...styles.headerText,
-          color: COLORS.secondary,
           marginBottom: 50,
         }}>
         Shield your records from prying eyes

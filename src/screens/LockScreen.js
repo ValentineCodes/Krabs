@@ -87,8 +87,8 @@ const styles = StyleSheet.create({
   headerText: {
     fontSize: SCREENWIDTH * 0.05,
     fontWeight: 'bold',
-    color: COLORS.secondary,
     marginBottom: 50,
+    color: COLORS.header,
   },
 
   container: {
