@@ -6,8 +6,6 @@ import {
   TextInput,
   Keyboard,
   Dimensions,
-  Image,
-  KeyboardAvoidingView,
   BackHandler,
 } from 'react-native';
 import {Icon} from 'react-native-elements';
@@ -47,7 +45,7 @@ const ChangePassword = ({navigation}) => {
           payload: false,
         });
       }
-      navigation.goBack();
+      navigation.pop();
       displayMsg('Password Changed Successfully', 'success');
     } else if (currentPassword.trim() && newPassword.trim()) {
       displayMsg('Incorrect Password', 'danger');
@@ -65,7 +63,7 @@ const ChangePassword = ({navigation}) => {
   ];
 
   const backHandler = BackHandler.addEventListener('hardwareBackPress', () => {
-    navigation.goBack();
+    navigation.pop();
     return true;
   });
 
@@ -76,63 +74,66 @@ const ChangePassword = ({navigation}) => {
   }, []);
 
   return (
-    <View style={[styles.container]}>
+    <View style={styles.container}>
       <View style={styles.header}>
         <Icon
           name="arrow-back"
           iconStyle={styles.headerIcon}
-          onPress={() => navigation.goBack()}
+          onPress={() => navigation.pop()}
         />
         <Text allowFontScaling={false} style={styles.headerText}>
           Change Password
         </Text>
       </View>
 
-      <KeyboardAvoidingView behavior="position">
-        <View style={{marginBottom: 50}}>
-          <Icon
-            name="lock-closed"
-            type="ionicon"
-            color="#FFD700"
-            size={SCREENWIDTH * 0.2}
-          />
-        </View>
-        <Text style={{...styles.headerText, marginBottom: 50}}>
-          Shield your records from prying eyes
-        </Text>
-        <TextInput
-          placeholder="Current Password"
-          placeholderTextColor={COLORS.faintWhite}
-          value={currentPassword}
-          maxLength={15}
-          returnKeyType="go"
-          style={styles.inputField}
-          onChangeText={setCurrentPassword}
-          onSubmitEditing={handleOnSubmitPassword}
-          secureTextEntry
-          autoFocus
+      <View style={{marginBottom: 50}}>
+        <Icon
+          name="lock-closed"
+          type="ionicon"
+          color="#FFD700"
+          size={SCREENWIDTH * 0.2}
         />
+      </View>
+      <Text
+        style={{
+          ...styles.headerText,
+          color: COLORS.secondary,
+          marginBottom: 50,
+        }}>
+        Shield your records from prying eyes
+      </Text>
+      <TextInput
+        placeholder="Current Password"
+        placeholderTextColor={COLORS.faintWhite}
+        value={currentPassword}
+        maxLength={15}
+        returnKeyType="go"
+        style={styles.inputField}
+        onChangeText={setCurrentPassword}
+        onSubmitEditing={handleOnSubmitPassword}
+        secureTextEntry
+        autoFocus
+      />
 
-        <TextInput
-          placeholder="New Password"
-          placeholderTextColor={COLORS.faintWhite}
-          value={newPassword}
-          maxLength={15}
-          returnKeyType="go"
-          style={styles.inputField}
-          onChangeText={setNewPassword}
-          onSubmitEditing={handleOnSubmitPassword}
+      <TextInput
+        placeholder="New Password"
+        placeholderTextColor={COLORS.faintWhite}
+        value={newPassword}
+        maxLength={15}
+        returnKeyType="go"
+        style={styles.inputField}
+        onChangeText={setNewPassword}
+        onSubmitEditing={handleOnSubmitPassword}
+      />
+
+      <View style={addButtonStyle}>
+        <Icon
+          name="checkmark-done-outline"
+          type="ionicon"
+          color="white"
+          onPress={handleOnSubmitPassword}
         />
-
-        <View style={addButtonStyle}>
-          <Icon
-            name="checkmark-done-outline"
-            type="ionicon"
-            color="white"
-            onPress={handleOnSubmitPassword}
-          />
-        </View>
-      </KeyboardAvoidingView>
+      </View>
     </View>
   );
 };

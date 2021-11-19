@@ -190,7 +190,7 @@ const Settings = ({navigation}) => {
         </View>
 
         {/* Theme */}
-        <View style={styles.settingContainer}>
+        {/* <View style={styles.settingContainer}>
           <View style={styles.settingHeader}>
             <Icon
               name="contrast-outline"
@@ -210,19 +210,9 @@ const Settings = ({navigation}) => {
             dropdownStyle={styles.dropdownStyle}
             rowTextStyle={styles.dropdownRowTextStyle}
             rowStyle={styles.dropdownRowStyle}
-            // onSelect={(selectedTheme, index) =>
-            //   dispatch({
-            //     type: 'updateTheme',
-            //     payload: selectedTheme,
-            //   })
-            // }
-            // buttonTextAfterSelection={(selectedTheme, index) =>
-            //   selectedTheme
-            // }
-            // rowTextForSelection={(item, index) => item}
             renderDropdownIcon={dropdownIcon}
           />
-        </View>
+        </View> */}
 
         {/* Backup */}
         {/* <TouchableOpacity activeOpacity={0.5} style={styles.settingContainer}>

@@ -6,6 +6,7 @@ import {
   TextInput,
   Keyboard,
   Dimensions,
+  ScrollView,
 } from 'react-native';
 import {Icon} from 'react-native-elements';
 import {useSelector} from 'react-redux';
@@ -46,7 +47,7 @@ const LockScreen = ({navigation}) => {
   ];
 
   return (
-    <View style={[styles.container]}>
+    <View style={styles.container}>
       <View style={{marginBottom: 50}}>
         <Icon
           name="lock-closed"
@@ -55,7 +56,7 @@ const LockScreen = ({navigation}) => {
           size={SCREENWIDTH * 0.2}
         />
       </View>
-      <Text style={{...styles.headerText, marginBottom: 50}}>Are you YOU?</Text>
+      <Text style={styles.headerText}>Are you YOU?</Text>
 
       <TextInput
         placeholder="What's your password?"
@@ -86,7 +87,8 @@ const styles = StyleSheet.create({
   headerText: {
     fontSize: SCREENWIDTH * 0.05,
     fontWeight: 'bold',
-    color: COLORS.header,
+    color: COLORS.secondary,
+    marginBottom: 50,
   },
 
   container: {
