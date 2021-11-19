@@ -345,7 +345,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginTop: 20,
     borderWidth: 0.5,
-    width: '50%',
+    minWidth: '50%',
     borderColor: 'rgba(255,255,255,0.3)',
     paddingVertical: 15,
   },
