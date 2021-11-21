@@ -126,7 +126,7 @@ const Settings = ({navigation}) => {
     : 'lock-open-outline';
 
   const backHandler = BackHandler.addEventListener('hardwareBackPress', () => {
-    navigation.goBack();
+    navigation.pop();
     return true;
   });
 
@@ -142,7 +142,7 @@ const Settings = ({navigation}) => {
         <Icon
           name="arrow-back"
           iconStyle={styles.headerIcon}
-          onPress={() => navigation.goBack()}
+          onPress={() => navigation.pop()}
         />
         <Text allowFontScaling={false} style={styles.headerText}>
           Settings
@@ -188,6 +188,24 @@ const Settings = ({navigation}) => {
             renderDropdownIcon={dropdownIcon}
           />
         </View>
+
+        {/* Categories */}
+        <TouchableOpacity
+          activeOpacity={0.5}
+          style={styles.settingContainer}
+          onPress={() => navigation.navigate('Categories')}>
+          <View style={styles.settingHeader}>
+            <Icon
+              name="grid-outline"
+              type="ionicon"
+              color="white"
+              style={styles.settingIcon}
+            />
+            <Text allowFontScaling={false} style={styles.settingTitle}>
+              Categories
+            </Text>
+          </View>
+        </TouchableOpacity>
 
         {/* Theme */}
         {/* <View style={styles.settingContainer}>

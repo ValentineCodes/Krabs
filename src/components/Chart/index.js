@@ -29,24 +29,12 @@ const DROPDOWN_ITEMS = [
   'Last 30 days',
   'Last 60 days',
   'This year',
-]; // 'Last 60 days'
-const CATEGORIES = [
-  'All',
-  'Food',
-  'Transport',
-  'Relationship',
-  'Leisure',
-  'Business',
-  'Utilities',
-  'Health',
-  'Savings',
-  'Personal',
-  'Miscellaneous',
 ];
 
 export default function () {
   const records = useSelector((state) => state.records);
   const currency = useSelector((state) => state.currency);
+  const categories = useSelector((state) => state.categories);
   const labelLength = useRef(7);
   const category = useRef('All');
 
@@ -306,7 +294,7 @@ export default function () {
             </Text>
           ) : (
             <SelectDropdown
-              data={CATEGORIES}
+              data={['All', ...categories]}
               defaultValue="All"
               buttonStyle={styles.dropdown}
               buttonTextStyle={styles.dropdownText}

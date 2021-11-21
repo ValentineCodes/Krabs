@@ -2,27 +2,16 @@ import React from 'react';
 import {View, Text} from 'react-native';
 
 import {Icon} from 'react-native-elements';
+import {useSelector} from 'react-redux';
 import SelectDropdown from 'react-native-select-dropdown';
 
 import {styles} from './styles';
 
 import {COLORS} from '../../../constants/colors';
 
-const CATEGORIES = [
-  'All',
-  'Food',
-  'Transport',
-  'Relationship',
-  'Leisure',
-  'Business',
-  'Utilities',
-  'Health',
-  'Savings',
-  'Personal',
-  'Miscellaneous',
-];
-
 export default function ({onSelectCategory, onPressAdd, navigation}) {
+  const categories = useSelector((state) => state.categories);
+
   const handleOnSelectCategory = (selectedItem, index) => {
     onSelectCategory(selectedItem);
   };
@@ -48,7 +37,7 @@ export default function ({onSelectCategory, onPressAdd, navigation}) {
 
       <View style={styles.headerRight}>
         <SelectDropdown
-          data={CATEGORIES}
+          data={['All', ...categories]}
           defaultValue="All"
           buttonStyle={styles.dropdown}
           buttonTextStyle={styles.dropdownText}

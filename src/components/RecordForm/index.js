@@ -2,7 +2,7 @@ import React, {useState, useEffect, useRef} from 'react';
 import {View, Text, TextInput, Keyboard, Dimensions} from 'react-native';
 import {Icon} from 'react-native-elements';
 import SelectDropdown from 'react-native-select-dropdown';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {useToast} from 'react-native-toast-notifications';
 import Animated, {
   useSharedValue,
@@ -16,28 +16,15 @@ import {styles} from './styles';
 
 import {COLORS} from '../../constants/colors';
 
-const CATEGORIES = [
-  'Category',
-  'Food',
-  'Transport',
-  'Relationship',
-  'Leisure',
-  'Business',
-  'Utilities',
-  'Health',
-  'Savings',
-  'Personal',
-  'Miscellaneous',
-];
-
 const SCREENHEIGHT = Dimensions.get('screen').height;
 
 export default ({onRender, resetFormVisibility}) => {
   const toast = useToast();
   const dispatch = useDispatch();
 
+  const categories = useSelector((state) => state.categories);
+
   const [isEditing, setIsEditing] = useState(false);
-  const [isFormVisible, setIsFormVisible] = useState(false);
   const [description, setDescription] = useState('');
   const [category, setCategory] = useState('');
   const [amount, setAmount] = useState('');
@@ -95,7 +82,6 @@ export default ({onRender, resetFormVisibility}) => {
     });
 
     Keyboard.dismiss();
-    setIsFormVisible(false);
     setIsEditing(false);
     setDescription('');
     setCategory('');
@@ -251,7 +237,7 @@ export default ({onRender, resetFormVisibility}) => {
 
         {/* Category */}
         <SelectDropdown
-          data={CATEGORIES}
+          data={['Category', ...categories]}
           defaultValue={category}
           buttonStyle={styles.categoryContainer}
           buttonTextStyle={styles.category}

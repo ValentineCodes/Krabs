@@ -11,6 +11,7 @@ import Home from './screens/Home';
 import Settings from './screens/Settings';
 import ChangePassword from './screens/ChangePassword';
 import LockScreen from './screens/LockScreen';
+import Categories from './screens/Categories';
 
 import {COLORS} from './constants/colors';
 
@@ -52,6 +53,11 @@ const App = () => {
               <Stack.Screen
                 name="ChangePassword"
                 component={ChangePassword}
+                options={{headerShown: false}}
+              />
+              <Stack.Screen
+                name="Categories"
+                component={Categories}
                 options={{headerShown: false}}
               />
             </Stack.Navigator>
