@@ -175,13 +175,19 @@ const Categories = ({navigation}) => {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <Icon
-          name="arrow-back"
-          iconStyle={styles.headerIcon}
-          onPress={() => navigation.pop()}
-        />
-        <Text allowFontScaling={false} style={styles.headerText}>
-          Manage Categories
+        <View style={styles.headerLeft}>
+          <Icon
+            name="arrow-back"
+            iconStyle={styles.headerIcon}
+            onPress={() => navigation.pop()}
+          />
+          <Text allowFontScaling={false} style={styles.headerText}>
+            Manage Categories
+          </Text>
+        </View>
+
+        <Text allowFontScaling={false} style={styles.headerRight}>
+          Long press to delete
         </Text>
       </View>
 
@@ -260,13 +266,24 @@ const styles = StyleSheet.create({
   header: {
     paddingVertical: 15,
     flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'flex-end',
+  },
+  headerLeft: {
+    flexDirection: 'row',
     alignItems: 'center',
   },
-  headerIcon: {marginRight: 20, color: 'white'},
+  headerIcon: {marginRight: 10, color: 'white'},
   headerText: {
     fontSize: SCREENWIDTH * 0.05,
     fontWeight: 'bold',
     color: COLORS.header,
+  },
+  headerRight: {
+    fontWeight: 'bold',
+    fontStyle: 'italic',
+    fontSize: SCREENWIDTH * 0.04,
+    color: COLORS.faintWhite,
   },
 
   scrollviewContainer: {

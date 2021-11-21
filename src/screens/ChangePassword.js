@@ -145,7 +145,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
   },
-  headerIcon: {marginRight: 20, color: 'white'},
+  headerIcon: {marginRight: 10, color: 'white'},
   headerText: {
     fontSize: SCREENWIDTH * 0.05,
     fontWeight: 'bold',

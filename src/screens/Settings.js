@@ -108,7 +108,7 @@ const Settings = ({navigation}) => {
   const onShare = () => {
     const options = {
       message:
-        '"To build wealth, you must first know where your money is headed"\n\nDownload Krabs App to keep track of all your business and personal expenses.\n\n"Your accountant now lives in your pocket".\n\n',
+        '"To build wealth, you must first know where your money is headed"\n\nDownload Krabs App to keep track of all your business and personal expenses.\n\n"Your accountant now lives in your pocket".\n',
       url: 'https://play.google.com/store/apps/details?id=com.activision.callofduty.shooter&hl=en&gl=US',
     };
 
@@ -351,7 +351,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
   },
-  headerIcon: {marginRight: 20, color: 'white'},
+  headerIcon: {marginRight: 10, color: 'white'},
   headerText: {
     fontSize: SCREENWIDTH * 0.05,
     fontWeight: 'bold',
