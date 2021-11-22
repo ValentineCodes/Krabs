@@ -185,10 +185,7 @@ export default function Header({popup}) {
           />
         </View>
         <Text allowFontScaling={false} style={styles.caption}>
-          Spend wisely.
-        </Text>
-        <Text allowFontScaling={false} style={styles.caption}>
-          Make smarter decisions.
+          Spend wisely.{'\n'}Make smarter decisions.
         </Text>
       </View>
 
