@@ -40,7 +40,7 @@ const Home = ({navigation}) => {
   const showPopup = (title, msg, img, color, duration) => {
     setTimeout(() => {
       showPopupModal(title, msg, img, color, duration);
-    }, 2000);
+    }, 1000);
   };
 
   const backHandler = BackHandler.addEventListener('hardwareBackPress', () => {
@@ -58,17 +58,17 @@ const Home = ({navigation}) => {
       setTimeout(() => {
         showPopup(
           'Welcome To Krabs!',
-          '"You must know where your money is going if you want to build wealth."',
+          '"You must know where your money is going if you want to build wealth."\n\nLet us help you with that.',
           require('../../assets/images/krabs_1.png'),
           COLORS.amount,
-          10000,
+          7000,
         );
 
         dispatch({
           type: 'updateInit',
           payload: false,
         });
-      }, 2000);
+      }, 1000);
     }
 
     return () => {

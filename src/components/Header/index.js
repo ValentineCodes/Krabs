@@ -134,7 +134,7 @@ export default function Header({popup}) {
         } remaining to spend today. Spend it wisely.`,
         require('../../../assets/images/krabs_4.png'),
         '#2f3557',
-        7000,
+        4000,
       );
     } else if (
       Number(progress().percent) > 75 &&
@@ -147,7 +147,7 @@ export default function Header({popup}) {
         } remaining to spend today. Careful not to exceed your budget!`,
         require('../../../assets/images/krabs_3.png'),
         'yellow',
-        7000,
+        4000,
       );
     } else if (Number(progress().percent) === 100) {
       popup(
@@ -155,7 +155,7 @@ export default function Header({popup}) {
         `You have reached your budget!. That's it for the day. Let's continue tomorrow.`,
         require('../../../assets/images/krabs_2.png'),
         'red',
-        10000,
+        5000,
       );
     } else if (Number(progress().percent) > 100) {
       popup(
@@ -163,7 +163,7 @@ export default function Header({popup}) {
         `How dare you exceed your budget!. It had better be worth it. Best to leave it at this for the day. Tomorrow's another day`,
         require('../../../assets/images/app_icon_1.png'),
         'red',
-        10000,
+        7000,
       );
     }
   }, [progress().percent]);
