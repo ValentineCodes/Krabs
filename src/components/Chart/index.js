@@ -310,11 +310,11 @@ export default function () {
         </View>
 
         <View style={styles.amountContainer}>
-          <Text allowFontScaling={false} style={styles.amount}>
+          <Text style={styles.amount}>
             {currency}
             {getTotalAmount()}
           </Text>
-          <Text allowFontScaling={false} style={[styles.amount, styles.avgAmt]}>
+          <Text style={[styles.amount, styles.avgAmt]}>
             a.v.g {'\u21D2'} {currency}
             {(getTotalAmount() / labelLength.current).toFixed(2)}{' '}
             {labelLength.current === 12 ? 'PM' : 'PD'}

@@ -31,9 +31,7 @@ export default function ({onSelectCategory, onPressAdd, navigation}) {
 
   return (
     <View style={styles.container}>
-      <Text allowFontScaling={false} style={styles.title}>
-        History
-      </Text>
+      <Text style={styles.title}>History</Text>
 
       <View style={styles.headerRight}>
         <SelectDropdown

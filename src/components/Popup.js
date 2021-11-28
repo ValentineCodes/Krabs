@@ -66,15 +66,9 @@ const Popup = ({onRender}) => {
     <Animated.View
       style={[{...styles.container, borderColor: data.color}, animatedStyle]}>
       <View style={styles.contentContainer}>
-        {data.title && (
-          <Text allowFontScaling={false} style={styles.title}>
-            {data.title}
-          </Text>
-        )}
+        {data.title && <Text style={styles.title}>{data.title}</Text>}
 
-        <Text allowFontScaling={false} style={styles.msg}>
-          {data.msg}
-        </Text>
+        <Text style={styles.msg}>{data.msg}</Text>
       </View>
       <Image source={data.img} style={styles.img} resizeMode="contain" />
     </Animated.View>

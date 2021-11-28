@@ -176,25 +176,21 @@ export default function Header({popup}) {
     <View style={styles.container}>
       <View>
         <View style={styles.titleContainer}>
-          <Text allowFontScaling={false} style={styles.title}>
-            Krabs
-          </Text>
+          <Text style={styles.title}>Krabs</Text>
           <Image
             source={require('../../../assets/images/krabs_1.png')}
             style={styles.logo}
           />
         </View>
-        <Text allowFontScaling={false} style={styles.caption}>
+        <Text style={styles.caption}>
           Spend wisely.{'\n'}Make smarter decisions.
         </Text>
       </View>
 
       <View style={styles.headerRight}>
         <View>
-          <Text allowFontScaling={false} style={styles.budgetTitle}>
-            Daily Budget
-          </Text>
-          <Text allowFontScaling={false} style={styles.budget}>
+          <Text style={styles.budgetTitle}>Daily Budget</Text>
+          <Text style={styles.budget}>
             {currency}
             {dailyBudget}
           </Text>
@@ -203,9 +199,7 @@ export default function Header({popup}) {
             value={progress().value}
             variant="determinate"
           />
-          <Text allowFontScaling={false} style={progressStyle}>
-            {progress().percent}%
-          </Text>
+          <Text style={progressStyle}>{progress().percent}%</Text>
         </View>
 
         <Icon

@@ -119,9 +119,7 @@ export default function ({date, expenses, onPressEdit}) {
 
       {/* Expenses */}
       {expenses.length == 0 ? (
-        <Text allowFontScaling={false} style={styles.msg}>
-          No record for this category
-        </Text>
+        <Text style={styles.msg}>No record for this category</Text>
       ) : (
         // renderRecord()
         expenses.map(renderRecord)

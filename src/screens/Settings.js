@@ -144,9 +144,7 @@ const Settings = ({navigation}) => {
           iconStyle={styles.headerIcon}
           onPress={() => navigation.pop()}
         />
-        <Text allowFontScaling={false} style={styles.headerText}>
-          Settings
-        </Text>
+        <Text style={styles.headerText}>Settings</Text>
       </View>
 
       <ScrollView
@@ -163,9 +161,7 @@ const Settings = ({navigation}) => {
               color="white"
               style={styles.settingIcon}
             />
-            <Text allowFontScaling={false} style={styles.settingTitle}>
-              Currency
-            </Text>
+            <Text style={styles.settingTitle}>Currency</Text>
           </View>
           <SelectDropdown
             data={CURRENCIES}
@@ -201,9 +197,7 @@ const Settings = ({navigation}) => {
               color="white"
               style={styles.settingIcon}
             />
-            <Text allowFontScaling={false} style={styles.settingTitle}>
-              Categories
-            </Text>
+            <Text style={styles.settingTitle}>Categories</Text>
           </View>
         </TouchableOpacity>
 
@@ -216,7 +210,7 @@ const Settings = ({navigation}) => {
               color="white"
               style={styles.settingIcon}
             />
-            <Text allowFontScaling={false} style={styles.settingTitle}>
+            <Text style={styles.settingTitle}>
               Theme
             </Text>
           </View>
@@ -241,7 +235,7 @@ const Settings = ({navigation}) => {
               color="white"
               style={styles.settingIcon}
             />
-            <Text allowFontScaling={false} style={styles.settingTitle}>
+            <Text style={styles.settingTitle}>
               Backup Records
             </Text>
           </View>
@@ -258,12 +252,10 @@ const Settings = ({navigation}) => {
             />
 
             <View>
-              <Text allowFontScaling={false} style={styles.settingTitle}>
-                Lock Krabs
-              </Text>
+              <Text style={styles.settingTitle}>Lock Krabs</Text>
 
               {/* <View style={styles.appLockMethodContainer}>
-                <Text allowFontScaling={false} style={styles.appLockMethod}>
+                <Text style={styles.appLockMethod}>
                   Using {appLock.method}.
                 </Text>
                 {!Platform.Version < 23 && (
@@ -303,15 +295,11 @@ const Settings = ({navigation}) => {
               style={styles.settingIcon}
             />
             <View style={{alignItems: 'center'}}>
-              <Text allowFontScaling={false} style={styles.settingTitle}>
-                Change Password
-              </Text>
+              <Text style={styles.settingTitle}>Change Password</Text>
 
               {appLock.isDefault === true && (
                 <View style={styles.appLockMethodContainer}>
-                  <Text allowFontScaling={false} style={styles.appLockMethod}>
-                    Default: 'Mr.Krabs'
-                  </Text>
+                  <Text style={styles.appLockMethod}>Default: 'Mr.Krabs'</Text>
                 </View>
               )}
             </View>
@@ -330,9 +318,7 @@ const Settings = ({navigation}) => {
               color="white"
               style={styles.settingIcon}
             />
-            <Text allowFontScaling={false} style={styles.settingTitle}>
-              Share with friends
-            </Text>
+            <Text style={styles.settingTitle}>Share with friends</Text>
           </View>
         </TouchableOpacity>
       </ScrollView>

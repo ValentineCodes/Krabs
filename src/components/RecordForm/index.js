@@ -210,9 +210,7 @@ export default ({onRender, resetFormVisibility}) => {
     <Animated.View style={[styles.formWrapper, animatedStyle]}>
       <View style={styles.container}>
         <View style={styles.header}>
-          <Text allowFontScaling={false} style={styles.title}>
-            {headerText}
-          </Text>
+          <Text style={styles.title}>{headerText}</Text>
           <Icon
             name="close-outline"
             type="ionicon"

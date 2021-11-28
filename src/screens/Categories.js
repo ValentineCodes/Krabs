@@ -184,9 +184,7 @@ const Categories = ({navigation}) => {
       onPress={showForm.bind(this, 'Edit', category)}
       onLongPress={handleOnDeleteCategory.bind(this, category)}>
       <View style={styles.categoryHeader}>
-        <Text allowFontScaling={false} style={styles.categoryTitle}>
-          {category}
-        </Text>
+        <Text style={styles.categoryTitle}>{category}</Text>
       </View>
     </TouchableOpacity>
   ));
@@ -213,13 +211,11 @@ const Categories = ({navigation}) => {
             iconStyle={styles.headerIcon}
             onPress={() => navigation.pop()}
           />
-          <Text allowFontScaling={false} style={styles.headerText}>
-            Manage Categories
-          </Text>
+          <Text style={styles.headerText}>Manage Categories</Text>
         </View>
 
-        <Text allowFontScaling={false} style={styles.headerRight}>
-          Long press to delete
+        <Text style={styles.headerRightText}>
+          Tap to edit{'\n'}Long press to delete
         </Text>
       </View>
 
@@ -238,9 +234,7 @@ const Categories = ({navigation}) => {
           onPress={showForm}>
           <View style={styles.categoryHeader}>
             <Icon name="add" color="white" style={styles.categoryIcon} />
-            <Text allowFontScaling={false} style={styles.categoryTitle}>
-              Create
-            </Text>
+            <Text style={styles.categoryTitle}>Create</Text>
           </View>
         </TouchableOpacity>
       </ScrollView>
@@ -249,7 +243,7 @@ const Categories = ({navigation}) => {
       <Animated.View style={[styles.formWrapper, animatedStyle]}>
         <View style={styles.formContainer}>
           <View style={styles.formHeader}>
-            <Text allowFontScaling={false} style={styles.formTitle}>
+            <Text style={styles.formTitle}>
               {isEditing ? 'Edit' : 'New'} Category
             </Text>
             <Icon
@@ -299,7 +293,7 @@ const styles = StyleSheet.create({
     paddingVertical: 15,
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'flex-end',
+    alignItems: 'flex-start',
   },
   headerLeft: {
     flexDirection: 'row',
@@ -311,7 +305,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: COLORS.header,
   },
-  headerRight: {
+  headerRightText: {
     fontWeight: 'bold',
     fontStyle: 'italic',
     fontSize: SCREENWIDTH * 0.04,

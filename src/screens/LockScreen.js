@@ -6,7 +6,6 @@ import {
   TextInput,
   Keyboard,
   Dimensions,
-  ScrollView,
 } from 'react-native';
 import {Icon} from 'react-native-elements';
 import {useSelector} from 'react-redux';
