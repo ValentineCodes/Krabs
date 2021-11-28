@@ -36,6 +36,8 @@ const Categories = ({navigation}) => {
 
   const isFormVisible = useRef(false);
 
+  const [isEditing, setIsEditing] = useState(false);
+  const [currentCategory, setCurrentCategory] = useState('');
   const [category, setCategory] = useState('');
 
   const displayMsg = (msg, type) => {
@@ -55,7 +57,15 @@ const Categories = ({navigation}) => {
     };
   });
 
-  const showForm = () => {
+  const showForm = (action, category = '') => {
+    if (action === 'Edit') {
+      setIsEditing(true);
+    } else {
+      setIsEditing(false);
+    }
+
+    setCurrentCategory(category);
+    setCategory(category);
     offset.value = withTiming(0, {
       duration: 500,
     });
@@ -86,13 +96,34 @@ const Categories = ({navigation}) => {
       displayMsg('Not Allowed!. Anything but that', 'danger');
     } else if (lowercaseCategories.includes(category.toLowerCase().trim())) {
       displayMsg('Category Already Exist!', 'danger');
+    } else if (isEditing) {
+      // Edit record in list
+      dispatch({
+        type: 'editCategory',
+        payload: {
+          currentCategory,
+          newCategory: category.trim(),
+        },
+      });
+
+      // Edit record in records
+      dispatch({
+        type: 'editCategories',
+        payload: {
+          currentCategory,
+          newCategory: category.trim(),
+        },
+      });
+
+      setCategory('');
+      displayMsg('Edited Category', 'success');
     } else {
       dispatch({
         type: 'addCategory',
         payload: category.trim(),
       });
       setCategory('');
-      displayMsg('Category Successfully Added', 'success');
+      displayMsg('Added Category', 'success');
     }
   };
 
@@ -109,7 +140,7 @@ const Categories = ({navigation}) => {
       payload: category,
     });
 
-    displayMsg(`${category} Category Deleted`, 'normal');
+    displayMsg(`Deleted ${category} Category`, 'normal');
   };
 
   const handleOnDeleteCategory = (category) => {
@@ -150,6 +181,7 @@ const Categories = ({navigation}) => {
       key={index}
       activeOpacity={0.5}
       style={styles.categoryContainer}
+      onPress={showForm.bind(this, 'Edit', category)}
       onLongPress={handleOnDeleteCategory.bind(this, category)}>
       <View style={styles.categoryHeader}>
         <Text allowFontScaling={false} style={styles.categoryTitle}>
@@ -218,7 +250,7 @@ const Categories = ({navigation}) => {
         <View style={styles.formContainer}>
           <View style={styles.formHeader}>
             <Text allowFontScaling={false} style={styles.formTitle}>
-              New Category
+              {isEditing ? 'Edit' : 'New'} Category
             </Text>
             <Icon
               name="close-outline"

@@ -37,6 +37,20 @@ export default function recordsReducer(state = {}, action) {
     }
 
     return newState;
+  } else if (action.type === 'editCategories') {
+    let newState = Object.assign({}, state);
+
+    let keys = Object.keys(state);
+
+    keys.forEach((key, index) => {
+      newState[key] = newState[key].map((record) =>
+        record.category === action.payload.currentCategory
+          ? {...record, category: action.payload.newCategory}
+          : record,
+      );
+    });
+
+    return newState;
   } else if (action.type === 'updateCategories') {
     let newState = Object.assign({}, state);
 
